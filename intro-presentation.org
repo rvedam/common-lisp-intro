@@ -1,0 +1,243 @@
+#+TITLE: Common Lisp : An Introduction
+#+AUTHOR:    Ram Vedam
+#+EMAIL: @unxn3rd
+#+DATE:      10-23-2017
+#+DESCRIPTION: An introduction to the Common Lisp programming language and environment
+#+KEYWORDS: Common Lisp, Lisp, Functional Programming
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+startup: beamer
+#+latex_header: \mode<beamer>{\usetheme{Warsaw}}
+#+LaTeX_CLASS: beamer
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+BEAMER_FRAME_LEVEL: 2
+
+* Presentation Overview
+\begin{frame}
+** Agenda
+\begin{center}
+\textbf{What we will cover}
+\end{center}
+- What is Common Lisp?
+- History
+- Ecosystem Overview
+- Basic Language Overview
+- Questions
+\end{frame}
+\begin{frame}
+** Agenda (What will not be covered)
+\begin{center}
+\textbf{What we will NOT cover}
+\end{center}
+\textit{Will just brush on these topics in passing}:
+- Macros
+- CLOS
+- MetaObject Protocol
+- Gray Streams
+- Packages 
+\end{frame}
+* Introduction
+\begin{frame}
+** What is Common Lisp?
+\begin{center}
+\textbf{What is Common Lisp?}
+\end{center}
+ - Direct Descendent of LISP, invented by John McCarthy in 1958
+ - multi-paradigm language
+     - procedural programming
+     - functional programming
+     - object-oriented programming
+     - generic programming
+     - can extend Lisp to embrace new paradigms (via macros)
+ - Functional Programming dominant paradigm (i.e. most code will utilize FP in some way)
+ - Interpreted as well as Compiled languag
+    - most implementation compile functions by default
+ - Compiler available while in the REPL (can profile and disassemble code)
+ \end{frame}
+ \begin{frame}
+** Available Lisp Compilers
+   - Commercial
+     - Allegro CL (Franz Inc.)
+     - LispWorks
+     - mocl (compiles to iOS and Android)
+   - Open Source
+     - Armed Bear Common Lisp (ABCL): runs on JVM
+     - SBCL (Steel Bank Common Lisp)
+       - forked from CMUCL with some added fixes and extensions
+       - available on all major platforms
+     - CMUCL
+     - Clozure CL
+       - good Objective-C interoperability
+     - ECL
+     - Clasp (LLVM)
+\end{frame}
+* History
+\begin{frame}
+** History of Common Lisp
+\begin{center}
+\textbf{A Brief History}
+\end{center}
+   - Late 1970s
+     - Different Lisps available for different computer architectures
+       - S-1 Lisp (for Mark II SuperComputer)
+       - MACLisp (from Project MAC not Macintosh) and it's derivatives (NIL, BBN Lisp, etc.)
+       - InterLisp (started BBN, expanded later Xerox PARC)
+       - many others
+     - Each Lisp expanded on the original Lisp 1.5 implementation and MACLisp just a little differently
+     - Each Lisp provided additional features (Parallel Programming, abstractions to implement OO, etc.)
+\end{frame}
+\begin{frame}     
+** History of Common Lisp (cont'd)
+\begin{center}
+\textbf{A Brief History}
+\end{center}
+   - 1981: Start of Standardization
+     - instigated by DARPA to create a single community Lisp standard
+     - took almost 13 years to standardize (ANSI standard official in 1994)
+       - CLtL (written by Guy Steele for example)
+          - first published in 1984, republished in 1989 (with new additions)
+\end{frame}       
+\begin{frame}
+** Why is this history necessary?
+\begin{center}
+\textbf{Why is this history necessary?}
+\end{center}
+   - CL spec epitome of design by committee approach
+   - Consequences
+     - Certain pieces of what is considered "Standard Common Lisp" are not part of ANSI Spec
+       - MOP, Gray Streams, Regular Expressions
+     - Common Lisp actively developed on and extended through Platform extensions
+       - created some fragmentation
+\end{frame}
+* Ecosystem Overview and Getting Started
+\begin{frame}
+** Roswell
+\begin{center}
+\textbf{Roswell}
+\end{center}
+- Utility to keep track and maintain multiple lisps
+- Supported on all Major Operating Systems
+  - Linux (via linuxbrew)
+  - Mac OS X (via Homebrew)
+  - Windows (installer available on Roswell wiki (https://github.com/roswell/roswell/wiki) in the Installation Section
+- Best way to get up and running with a lisp
+- Best way to maintain and keep track of multiple lisps installed
+\end{frame}
+\begin{frame}
+** Quicklisp
+\begin{center}
+\textbf{Quicklisp}
+\end{center}
+- De facto Package Manager for Common Lisp
+- Nice curated set of libraries
+- Installed by default when using Roswell with different lisp implementations
+\end{frame}
+\begin{frame}
+** Common Lisp Ecosystem
+\begin{alignleft}
+\textit{Every Common Lisp System consists of 4 main layers:}
+\end{alignleft}
+
+- ANSI Common Lisp
+- De facto standards
+- Platform Extensions
+- Third Party Libraries
+\end{frame}
+\begin{frame}
+** ANSI Common Lisp
+\begin{center}
+\textbf{ANSI Common Lisp}
+\end{center}
+  - the standardized foundation
+  - EVERY CL compiler implements this standard (at least)
+\end{frame}
+\begin{frame}
+** De facto standards
+\begin{center}
+\textbf{Defacto standards}
+\end{center}
+  - libraries that aren't part of the standard but most major implementations implement
+  - MOP, Gray streams, CFFI, ASDF, etc.
+\end{frame}
+\begin{frame}
+** Platform Extensions
+\begin{center}
+\textbf{Platform Extensions}
+\end{center}
+  - Threading
+  - Extensible Sequences
+  - Extensions to leverage processor-specific instructions (VOPs)
+  - MOP extensions
+  - Tooling
+    - Profilers
+    - Advanced Debuggers
+\end{frame}
+\begin{frame}
+** Third-Party Application Libraries
+\begin{center}
+\textbf{Third-Party Libraries}
+\end{center}
+  - User Interface Libraries (Qtool, CommonQt, McCLIM, LTK)
+  - Web Frameworks (Caveman2, ningle, Weblocks, etc.)
+  - Async and Parallel APIs (lparallel, cl-async, etc.)
+  - and many more!
+\end{frame}
+* Language Overview
+\begin{frame}
+** Common Lisp Language Overview
+\begin{center}
+\textbf{Language Overview}
+\end{center}
+\end{frame}
+* Recommendations and Final Thoughts
+\begin{frame}
+** Recommendations
+\begin{center}
+\textbf{Recommendations}
+\end{center}
+- prefer defparameter over defvar
+  - defparameter always assigns value to symbol
+  - defvar only assigns value once to symbol upon first initialization
+  - if using defvar and need to change value of binding using SETF not defvar
+- prefer use of lexical environments under normal development
+  - few cases where special variables are an exception, but advanced topic
+\end{frame}
+\begin{frame}
+** More Recommendations
+\begin{center}
+\textbf{Recommendations}
+\end{center}
+- functional programming by default
+  - leads to cleaner, modular, composable code
+  - leads into dealing with generic programming (at least in Common Lisp)
+\end{frame}
+\begin{frame}
+** Book Recommendations
+\begin{center}
+\textbf{Book Recommendation}
+\end{center}
+\begin{flushleft}
+\textit{Introductory Books}
+\end{flushleft}
+- Practical Common Lisp by Peter Siebel
+- ANSI Common Lisp by Paul Graham
+- Land of Lisp by Conrad Barski
+\begin{flushleft}
+\textit{Learning about Macros:}
+\end{flushleft}
+- On Lisp by Paul Graham
+- Let over Lambda by Doug Hoyte
+
+\end{frame}
+* Questions
+\begin{frame}
+\begin{center}
+\textbf{Questions??}
+\end{center}
+\end{frame}
