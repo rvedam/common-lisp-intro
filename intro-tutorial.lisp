@@ -59,28 +59,33 @@ Let's take a look at some examples of dealing with functions.
   (if (and k (> (length args) 0))
       (concatenate 'list (list x y z k) args)))
 
+;; this is useful to design a few utilities (this example will be used later).
+(defun range (a b)
+  (loop for i from a to b collecting i))
 
-
-
-;; to check if a function is bound we can use the function fboundp
+;; Of course to check if a symbol is bound to a function we can use the function fboundp
 (fboundp 'add2)
 
-
-
 #|
-Now dynamic variables are, in most cases, the equivalent of global variables so outside a few
-cases where they are really needed most code will try and not use them. Instead, most code will
+Let's return to dynamic variables for a moment. dynamic variables are, in most cases,
+the equivalent of global variables so outside a few cases where they are really needed
+most code will try and not use them. Instead, most code will
 use lexical variables. These are created when you defining a function or utilize one of the
-many let forms (let, let*, flet, labels).
+many let forms (let, let*, flet, labels). defun as well can be thought of and is a let form,
+in that it creates a lexical environment and stores the variables.
 |#
 
 ;; this is just a simple example of let
 (let ((x 0))
   (+ x 1))
 
+;; TODO: Add let* example here during presentation
+
 ;; example of using flet to creat a function that simply doubles the argument passed in
 (flet ((my-double (x) (* 2 x)))
   (my-double 2))
+
+;; TODO: add labels example during presentation
 
 #|
 Before we go on, let me just touch a little bit on comments. What you have seen so far in this
@@ -104,5 +109,25 @@ Two semi-colons describing the line of code below
 This documentation tips become more important as you create larger codebases hence the early
 warning about comment conventions.
 
-Let's move on. 
+Let us continue.
 |#
+
+;;; blocks, progn, tagbody 
+
+;;; iteration
+
+;; CL supports several forms of iteration (most of which can be built using the most general
+;; iteration construct in CL). to run something a certain number of times we have dotimes
+
+(dotimes (x 5)
+  (print x))
+
+;; of course we can also dolist
+
+(dolist (x (range 0 5))
+  (print x))
+
+;; in fact both dolist and dotimes are implemented with the do form shown below
+
+;;; Collections and higher-order functions
+However, contrary to popular belief, CL supports many data structure
