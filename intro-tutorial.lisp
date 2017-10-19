@@ -44,7 +44,14 @@ deals with functions and how it implements the Functional Programming paradigm, 
 in turn will be far more modular and more composable.
 
 Lisp was one of the first languages to support anonymous (aka lambda) functions, and in
-Common Lisp that feature was inherited and implemented. 
+Common Lisp that feature was inherited and implemented. They also support normal named
+functions, as is common now in almost all languages.
+
+Functions (both anonymous and named functions) have a several interesting features.
+- They support keyword arguments
+- They support optional parameters.
+- They can collect all arguments passed into function as a single list to be dealt with
+later (using the &rest keyword)
 
 Let's take a look at some examples of dealing with functions.
 |#
@@ -54,10 +61,16 @@ Let's take a look at some examples of dealing with functions.
 (setf (symbol-function 'add) (lambda (x y) (+ x y)))
 
 ;; better way: using defun
-;; below example of a sophisticated function that shows off all features of functions
-(defun dummy-function (x y &key z &optional k &rest args)
-  (if (and k (> (length args) 0))
-      (concatenate 'list (list x y z k) args)))
+(defun make-triple (&key s p o)
+  (list s p o))
+
+(defun my-sum (afun &rest args)
+  (loop for i in (mapcar afun args) summing i))
+
+(defun example-with-optional-parameter (&optional k)
+  (if k
+      (print k)
+      (print "k was not defined")))
 
 ;; this is useful to design a few utilities (this example will be used later).
 (defun range (a b)
@@ -112,7 +125,44 @@ warning about comment conventions.
 Let us continue.
 |#
 
-;;; blocks, progn, tagbody 
+;;; blocks, progn, tagbody
+#|
+Typically in Common Lisp code, code is written and sequentially, with the last expression
+evaluated being the return value value of a block of code. However, there are times where
+writing an explicit expression indicating a code block maybe required. For example,
+in an if expression you may want multiple things to happen when a condition is satisfied.
+In cases like this, you could a PROGN form (which allows you to specify several expressions
+to run in sequence)
+
+|#
+
+(if (> 5 4)
+    (progn
+      (format t "5 is greater than 4~%")
+      (format t "5*5 = ~A~%" (* 5 5))))
+
+#|
+In cases where we may want to return abruptly (i.e. in the middle of a code block), you can
+use a block form instead. In fact, defun is often implemented using a block.
+|#
+
+(block head
+  (+ 1 3)
+  (return-from head 'T)
+  (format t "this won't be executed"))
+
+;; example of using tagbody
+
+(tagbody
+   (setf x 0)
+ top
+   (if (> x 5)
+       nil
+       (progn
+         (format t "~A~%" x)
+         (setf x (incf x))
+         (go top))))
+
 
 ;;; iteration
 
@@ -130,4 +180,3 @@ Let us continue.
 ;; in fact both dolist and dotimes are implemented with the do form shown below
 
 ;;; Collections and higher-order functions
-However, contrary to popular belief, CL supports many data structure

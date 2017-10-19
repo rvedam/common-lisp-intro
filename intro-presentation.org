@@ -26,6 +26,7 @@
 \end{center}
 - What is Common Lisp?
 - History
+- Getting Started
 - Ecosystem Overview
 - Basic Language Overview
 - Questions
@@ -35,12 +36,12 @@
 \begin{center}
 \textbf{What we will NOT cover}
 \end{center}
-\textit{Will just brush on these topics in passing}:
 - Macros
 - CLOS
 - MetaObject Protocol
 - Gray Streams
-- Packages 
+- Packages
+- Conditions
 \end{frame}
 * Introduction
 \begin{frame}
@@ -50,15 +51,15 @@
 \end{center}
  - Direct Descendent of LISP, invented by John McCarthy in 1958
  - multi-paradigm language
-     - procedural programming
-     - functional programming
-     - object-oriented programming
-     - generic programming
-     - can extend Lisp to embrace new paradigms (via macros)
+   - procedural programming
+   - functional programming
+   - object-oriented programming
+   - generic programming
+   - can extend Lisp to embrace new paradigms (via macros)
  - Functional Programming dominant paradigm (i.e. most code will utilize FP in some way)
- - Interpreted as well as Compiled languag
-    - most implementation compile functions by default
- - Compiler available while in the REPL (can profile and disassemble code)
+ - Interpreted as well as compiled language
+   - most implementation compile functions by default
+ - compiler that can create executables and available in REPL
  \end{frame}
  \begin{frame}
 ** Available Lisp Compilers
@@ -108,7 +109,10 @@
 \begin{center}
 \textbf{Why is this history necessary?}
 \end{center}
-   - CL spec epitome of design by committee approach
+   - CL spec classical example of design by committee
+   - CL was a "consolidation effort"
+     - A lot of compromises were made for reasons of backwards compatibility
+     - A lot of decisions were well-discussed and 
    - Consequences
      - Certain pieces of what is considered "Standard Common Lisp" are not part of ANSI Spec
        - MOP, Gray Streams, Regular Expressions
@@ -116,6 +120,20 @@
        - created some fragmentation
 \end{frame}
 * Ecosystem Overview and Getting Started
+\begin{frame}
+** Getting Started
+\begin{center}
+\textbf{Getting Started}
+\end{center}
+There are several ways of getting started:
+- downloading a Lisp (SBCL, CCL, etc.)
+  - Follow the appropriate Lisp Compiler's website on how to best install the distro
+  - \textbf{Suggestion}: use SBCL unless you have a good reason to try other distros
+- downloading and installing Quicklisp
+  - located at https://www.quicklisp.org/beta/
+  - single file download
+  - Just load into your REPL, and follow the instructions
+\end{frame}
 \begin{frame}
 ** Roswell
 \begin{center}
@@ -185,7 +203,7 @@
 \end{center}
   - User Interface Libraries (Qtool, CommonQt, McCLIM, LTK)
   - Web Frameworks (Caveman2, ningle, Weblocks, etc.)
-  - Async and Parallel APIs (lparallel, cl-async, etc.)
+  - Async and Parallel APIs (lparallel, cl-async, bordeaux-threads, etc.)
   - and many more!
 \end{frame}
 * Language Overview
