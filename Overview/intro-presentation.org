@@ -59,7 +59,16 @@
    - can extend Lisp to embrace new paradigms (via macros)
  - Functional Programming dominant paradigm (i.e. most code will utilize FP in some way)
  - Interpreted as well as compiled language
-   - most implementation compile functions by default
+ (defun compose (&rest fns)
+  (if fns
+      #'(lambda (&rest args)
+          (let ((fn (car (last fns)))
+                (rest-fns (butlast fns)))
+            (reduce #'funcall rest-fns
+                    :from-end t
+                    :initial-value (apply fn args))))
+      #'identity))
+  - most implementation compile functions by default
  - compiler that can create executables and available in REPL
  \end{frame}
  \begin{frame}
@@ -254,7 +263,7 @@ There are several ways of getting started:
 \begin{frame}
 ** Book Recommendations
 \begin{center}
-\textbf{Book Recommendation}
+\textbf{Book Recommendations}
 \end{center}
 \begin{flushleft}
 \textit{Introductory Books}
@@ -267,6 +276,19 @@ There are several ways of getting started:
 \end{flushleft}
 - On Lisp by Paul Graham
 - Let over Lambda by Doug Hoyte
+\end{frame}
+** Book Recommendations
+\begin{frame}
+\begin{center}
+\textbf{Book Recommendations}
+\end{center}
+\begin{flushleft}
+\textit{Additional Resources}
+\end{flushleft}
+
+\begin{itemize}
+\item Common Lisp Recipes by Edi Weitz (published 2015)
+\end{itemize}
 
 \end{frame}
 * Questions
