@@ -42,6 +42,7 @@
 - Gray Streams
 - Packages
 - Conditions
+- LOOP
 \end{frame}
 * Introduction
 \begin{frame}
@@ -111,12 +112,14 @@
 \end{center}
    - CL spec classical example of design by committee
    - CL was a "consolidation effort"
-     - A lot of compromises were made for reasons of backwards compatibility
-     - A lot of decisions were well-discussed and 
+     - A lot of compromises were made for reasons:
+       - backwards compatibility
+       - systems migration (different OSes, architectures)
+       - political appeasement
    - Consequences
      - Certain pieces of what is considered "Standard Common Lisp" are not part of ANSI Spec
        - MOP, Gray Streams, Regular Expressions
-     - Common Lisp actively developed on and extended through Platform extensions
+     - Platform extensions covers aspects not covered by ANSI or defacto standards
        - created some fragmentation
 \end{frame}
 * Ecosystem Overview and Getting Started
@@ -133,6 +136,19 @@ There are several ways of getting started:
   - located at https://www.quicklisp.org/beta/
   - single file download
   - Just load into your REPL, and follow the instructions
+\end{frame}
+\begin{frame}
+** Getting Started (continued)
+\begin{center}
+\textbf{Getting Started (cont'd)}
+\end{center}
+- Choosing a Text Editor
+  - Use whatever makes you comfortable when you're first learning the language
+- Recommendation: learn Emacs for Lisp Development
+  - SLIME: Superior Lisp Interaction Mode for Emacs
+    - makes Emacs into an IDE for Lisp Development
+    - provides nice integrated debugger, inspector, and other nice to have tools
+    - works across multiple lisps
 \end{frame}
 \begin{frame}
 ** Roswell

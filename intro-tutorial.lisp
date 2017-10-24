@@ -17,7 +17,8 @@ which can then be parsed into a proper lisp object (i.e. an s-expression that we
 traverse using the standard CL list manipulation facilities like car, cdr, etc). We will touch
 on this piece a bit later as it is the basis for macros.
 
-As with other languages, Common Lisp has variables, places where you can store and hold values in your program. Common Lisp has two type of variables, lexical variables and dynamic or "special" variables.
+As with other languages, Common Lisp has variables, places where you can store and hold values in your program. Common Lisp has two type of variables,
+lexical variables and dynamic or "special" variables.
 
 Below are some examples of dynamic variables. Please note all variables, either dynamic or
 lexical, are not typed. The value that is bound to them is typed. This is unlike other
@@ -64,13 +65,21 @@ Let's take a look at some examples of dealing with functions.
 (defun make-triple (&key s p o)
   (list s p o))
 
+;; If you'd like to define a function that takes an arbitrary number of arguments use the
+;; &rest keyword, which will take all the arguments and pass them in as a single list structure
 (defun my-sum (afun &rest args)
   (loop for i in (mapcar afun args) summing i))
 
+;; CL also supports optional arguments
 (defun example-with-optional-parameter (&optional k)
   (if k
       (print k)
       (print "k was not defined")))
+
+
+;; supports default arguments as well
+(defun example-with-default-argument (&optional (x 5))
+  (print x))
 
 ;; this is useful to design a few utilities (this example will be used later).
 (defun range (a b)
@@ -88,7 +97,7 @@ many let forms (let, let*, flet, labels). defun as well can be thought of and is
 in that it creates a lexical environment and stores the variables.
 |#
 
-;; this is just a simple example of let
+;; this is just a simple example of lexical environment using let form
 (let ((x 0))
   (+ x 1))
 
@@ -98,7 +107,9 @@ in that it creates a lexical environment and stores the variables.
 (flet ((my-double (x) (* 2 x)))
   (my-double 2))
 
-;; TODO: add labels example during presentation
+;; TODO: Labels Example
+
+;; TODO: Dynamic variables 
 
 #|
 Before we go on, let me just touch a little bit on comments. What you have seen so far in this
@@ -178,5 +189,34 @@ use a block form instead. In fact, defun is often implemented using a block.
   (print x))
 
 ;; in fact both dolist and dotimes are implemented with the do form shown below
+(do ((x 0 (1+ x)))
+    ((> x 5) 'T)
+  (print x))
+
+;; iterative way of implementing finding nth fibonacci number
+(defun fibo-do (n)
+  (do ((i 0 (1+ i))
+       (x 0 y)
+       (y 1 (+ x y)))
+      ((> i n) y))
+  )
 
 ;;; Collections and higher-order functions
+
+;; TODO: Show mapcar
+
+;; TODO: Show mapcan
+
+;; TODO: Show reduce
+
+
+;; Example: implementing compose 
+(defun compose (&rest fns)
+  (if fns
+      #'(lambda (&rest args)
+          (let ((fn (car (last fns)))
+                (rest-fns (butlast fns)))
+            (reduce #'funcall rest-fns
+                    :from-end t
+                    :initial-value (apply fn args))))
+      #'identity))
